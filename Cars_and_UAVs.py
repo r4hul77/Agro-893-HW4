@@ -13,6 +13,28 @@ import numpy as np
 """       SYSTEM STUFF        """
 """***************************"""
 # Make a superclass for vehicles
+class Trip(object):
+
+    def __init__(self):
+        self.start = None
+        self.end = None
+        self.way_points = None
+        self.time = None
+        self.speed = None
+
+    def set_start(self, start):
+        self.start = start
+
+    def set_end(self, end):
+        self.end = end
+
+
+    def set_way_points(self, way_points):
+        self.way_points = way_points
+
+    def run(self):
+        pass
+
 class Vehicle(object):
     
     # This will be overloaded by __init__ routines
@@ -131,6 +153,8 @@ class UAV(Vehicle):
                  Top_Speed=20.       # P, ratio, km/hr in still air
                  ):
         
+
+
         """Convert to Vehicle units;store with set_Vehicle_attributes"""
         pass  # Placeholder for you to fill in details.  In particular,
               # Battery_Charge         --->  E_capac
@@ -154,7 +178,7 @@ class UAV(Vehicle):
 """     ENVIRONMENT STUFF     """
 """***************************"""
 # Describes a road trip and road conditions along the way
-class Road_trip(object):
+class Road_trip(Trip):
     
     # Create a trip
     def __init__(self,
@@ -163,7 +187,13 @@ class Road_trip(object):
                  Roughness      # P, [.3 - .95], road roughness, unitless 
                                 #    reduces efficiency, ratio
                  ):
-        
+
+        super().__init__()
+
+
+        self.set_way_points(WayPoints)
+        self.set_start(WayPoints[0])
+        self.set_end(WayPoints[-1])
         # Error check inputs - one should ALWAYS do
         if len(WayPoints)!=len(Roughness) or\
            len(Roughness)!=len(SpeedLims):
