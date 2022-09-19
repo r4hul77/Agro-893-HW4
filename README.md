@@ -1,7 +1,5 @@
 # Agro-893-HW4
 
-# AGRON893-HW4
-
 **Homework 4**          AGRON 893 – Fall 2022 *Due: 23 Sep 22* 
 
 **NOTE**: This assignment is to be worked by the entire class working as one team.  You only need to turn in one copy, which can be emailed to the instructor. ![](Aspose.Words.c0317689-50ca-4a0c-98e6-61624fffc7a5.001.png)
