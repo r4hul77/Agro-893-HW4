@@ -43,6 +43,9 @@ class Vehicle(object):
     def __init__(self):
         pass
 
+    def add_trip(self, trip):
+        self.Trip = trip
+
     # Set up values for common features 
     def set_Vehicle_attributes(self,
                                E_avail=0., # V, MJ,     ratio, energy remain.
@@ -142,6 +145,12 @@ class Car(Vehicle):
             
         # Output trip info
         print("Car trip completed with",self.Tanks,"tank needed")
+
+    def add_trip(self, trip):
+        if(isinstance(trip, RoadTrip)):
+            self.Trip = trip
+        else:
+            raise Exception("Car can't Fly can only take RoadTrip")
      
 # Subclass UAV
 class UAV(Vehicle):
@@ -173,6 +182,12 @@ class UAV(Vehicle):
             print("Mission completed")
         else:
             print("Crashed and burned",EndPoint,"km into the mission")
+
+    def add_trip(self, trip):
+        if(isinstance(trip, FlightPlan)):
+            self.Trip = trip
+        else:
+            raise Exception("UAV can only take FlightPlan")
 
 """***************************"""
 """     ENVIRONMENT STUFF     """
@@ -224,7 +239,7 @@ class Road_trip(Trip):
         
         
 # Describes a desired flight and the conditions encountered on the way        
-class Flight_plan(object):        
+class Flight_plan(Trip):
         
     # Create a trip
     def __init__(self,
