@@ -153,6 +153,42 @@ class Car(Vehicle):
             raise Exception("Car can't Fly can only take RoadTrip")
   
 
+# Subclass UAV
+class UAV(Vehicle):
+    
+    # Create an instance
+    def __init__(self,
+                 Battery_Charge=10., # P, ratio, Watt hours
+                 Range=15.,          # P, ratio, km on full battery charge
+                 Top_Speed=20.       # P, ratio, km/hr in still air
+                 ):
+        
+
+
+        """Convert to Vehicle units;store with set_Vehicle_attributes"""
+        pass  # Placeholder for you to fill in details.  In particular,
+              # Battery_Charge         --->  E_capac
+              # Battery_Charge         --->  E_avail
+              # Battery_Charge & Range --->  E_effic
+              # Top_Speed & E_effic    --->  SE_args
+    
+    # Fly the mission
+    def Fly_Mission(self):
+        
+        # See how it goes
+        EndPoint,MadeIt=self.Go_until_No_Go(self.loc)
+        
+        # Did we crash?
+        if MadeIt:
+            print("Mission completed")
+        else:
+            print("Crashed and burned",EndPoint,"km into the mission")
+
+    def add_trip(self, trip):
+        if(isinstance(trip, FlightPlan)):
+            self.Trip = trip
+        else:
+            raise Exception("UAV can only take FlightPlan")
 
 """***************************"""
 """     ENVIRONMENT STUFF     """
