@@ -151,7 +151,8 @@ class Car(Vehicle):
             self.Trip = trip
         else:
             raise Exception("Car can't Fly can only take RoadTrip")
-     
+  
+
 # Subclass UAV
 class UAV(Vehicle):
     
