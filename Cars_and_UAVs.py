@@ -147,7 +147,7 @@ class Car(Vehicle):
         print("Car trip completed with",self.Tanks,"tank needed")
 
     def add_trip(self, trip):
-        if(isinstance(trip, RoadTrip)):
+        if(isinstance(trip, Road_trip)):
             self.Trip = trip
         else:
             raise Exception("Car can't Fly can only take RoadTrip")
@@ -185,7 +185,7 @@ class UAV(Vehicle):
             print("Crashed and burned",EndPoint,"km into the mission")
 
     def add_trip(self, trip):
-        if(isinstance(trip, FlightPlan)):
+        if(isinstance(trip, Flight_plan)):
             self.Trip = trip
         else:
             raise Exception("UAV can only take FlightPlan")
@@ -219,7 +219,7 @@ class Road_trip(Trip):
                 
         # Store the values after converting to Vehicle units
         # Waypoints*(1.60934 km/mi)
-        self.WayPoints=WayPoints*1.60934    
+        self.WayPoints = WayPoints*1.60934
         # (mi/hr)*(1.60934 km/mi)/(3.6 ksec/hr)
         self.SpeedLimits=SpeedLims*1.60934/3.6 
         self.Roughness=Roughness
@@ -262,10 +262,10 @@ class Flight_plan(Trip):
     # vehicle type.  That's why the superclass uses the SE_args tuple
     # as was used in class to pass different numbers of arguments to
     # the rhs routines for differential equation solving.
-    def Speed_Efficiency(self,Loc,T_speed,Still_Air_Efficiency):
+    def Speed_Efficiency(self, Loc, T_speed, Still_Air_Efficiency):
         
         # Determine the headwind by linear interpolation
-        headwind=np.interp(Loc,self.WayPoints,self.Headwinds)
+        headwind=np.interp(Loc, self.WayPoints, self.Headwinds)
         
         # Determine the ground speed, which is the actual speed that
         # counts toward completion of the mission.  NOTE that if the
@@ -275,16 +275,16 @@ class Flight_plan(Trip):
         # does not.  That is called a design flaw.  Of course, does
         # one really want to be flying a UAV under conditions where
         # it can only go downwind?  Probably not.
-        Speed=T_speed-headwind
+        Speed = T_speed-headwind
         
         # The efficiency per distance traveled needs to be prorated by 
         # the actual speed vs. the speed in still air.  That is, a 
         # stong headwind will make the energy expenditure per unit
         # distance traveled over the ground quite large.
-        Efficiency=Still_Air_Efficiency*(Speed/T_speed)
+        Efficiency = Still_Air_Efficiency*(Speed/T_speed)
         
         # Done
-        return Speed,Efficiency
+        return Speed, Efficiency
         
 """ Example usage """
 def main():
