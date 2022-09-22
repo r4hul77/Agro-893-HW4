@@ -159,10 +159,15 @@ class UAV(Vehicle):
             print("Crashed and burned", EndPoint, "km into the mission")
 
     def add_trip(self, trip):
-        if (isinstance(trip, Flight_plan)):
-            self.Trip = trip
-        else:
+        # check if it is not a Flight_plan instance
+        if not (isinstance(trip, Flight_plan)):
             raise Exception("UAV can only take FlightPlan")
+
+        # check if one of the trip headwind is bigger than the top speed
+        for headwind in trip.Headwinds:
+            if headwind > self.T_Speed:
+                raise Exception("UAV can't fly in headwind bigger than top speed")
+        self.Trip = trip
 
 
 """***************************"""
