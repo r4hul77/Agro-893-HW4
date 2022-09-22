@@ -77,6 +77,10 @@ class Vehicle(object):
         self.Trip = None
         self.loc = 0
 
+    def Go(self):
+        self.loc, finished = self.Go_until_No_Go(self.loc)
+        return finished
+
 class Car(Vehicle):
 
     # Create an instance
@@ -106,7 +110,7 @@ class Car(Vehicle):
         self.Tanks = 1  # V, unitless (pure number), ratio, tankfulls for trip
 
     # Take the trip
-    def Car_Go(self):
+    def Go(self):
 
         # Burn the first tank
         self.loc, Arrived = self.Go_until_No_Go(self.loc)
@@ -163,6 +167,8 @@ class UAV(Vehicle):
         else:
             raise Exception("UAV can only take FlightPlan")
 
+    def Go(self):
+        raise Exception("Go Not Implemented for UAV")
 
 """***************************"""
 """     ENVIRONMENT STUFF     """

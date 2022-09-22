@@ -16,28 +16,15 @@ from vehicles import Car, UAV
 # Make a superclass for vehicles
 
 def main():
-    
-    # Get a car
-    My_Town_and_Country=Car(Top_Speed=105.)
-    
-    # Plan the trip
-    WayPoints=np.array([0.,.5,1.5,10.])
-    Roughness=np.array(4*[0.8])
-    SpeedLimits=np.array([25.,25.,45.,75.])
-    My_Town_and_Country.add_trip(Road_trip(WayPoints=np.linspace(0, 10),
-                                       SpeedLims=np.random.rand(),
-                                       Roughness=Roughness))
-    
-    # Take the trip
-    My_Town_and_Country.Car_Go()
+
     # Trips
     length_trips = 30
     trips = [Road_trip(WayPoints= np.linspace(0, 30, length_trips), SpeedLims=np.random.rand(length_trips)*105,
                        Roughness=np.random.uniform(low=0.3, high=0.8, size=length_trips)),
-             Flight_plan(WayPoints= np.linspace(0, 30, length_trips), SpeedLims=np.random.rand(length_trips)*105),
+             Flight_plan(WayPoints= np.linspace(0, 30, length_trips), Headwinds=np.random.rand(length_trips)*105),
              Road_trip(WayPoints= np.linspace(0, 30, length_trips), SpeedLims=np.random.rand(length_trips)*105,
                        Roughness=np.random.uniform(low=0.3, high=0.8, size=length_trips)),
-             Flight_plan(WayPoints=np.linspace(0, 30, length_trips), SpeedLims=np.random.rand(length_trips) * 105)]
+             Flight_plan(WayPoints=np.linspace(0, 30, length_trips), Headwinds=np.random.rand(length_trips) * 105)]
 
              # Make Four Trips
     vehicle_list = [Car(Top_Speed=105.), UAV(Top_Speed=105., Battery_Charge=100, Range=100)]
