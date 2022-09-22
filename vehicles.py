@@ -77,6 +77,10 @@ class Vehicle(object):
         self.Trip = None
         self.loc = 0
 
+    def Go(self):
+        self.loc, finished = self.Go_until_No_Go(self.loc)
+        return finished
+
 class Car(Vehicle):
 
     # Create an instance
@@ -106,7 +110,7 @@ class Car(Vehicle):
         self.Tanks = 1  # V, unitless (pure number), ratio, tankfulls for trip
 
     # Take the trip
-    def Car_Go(self):
+    def Go(self):
 
         # Burn the first tank
         self.loc, Arrived = self.Go_until_No_Go(self.loc)
@@ -140,11 +144,10 @@ class UAV(Vehicle):
                  ):
 
         """Convert to Vehicle units;store with set_Vehicle_attributes"""
-        pass  # Placeholder for you to fill in details.  In particular,
-        # Battery_Charge         --->  E_capac
-        # Battery_Charge         --->  E_avail
-        # Battery_Charge & Range --->  E_effic
-        # Top_Speed & E_effic    --->  SE_args
+        super().__init__()
+        self.max_battery_charge = Battery_Charge * 3600  # J
+        self.max_range = Range*1000  # km
+        self.max_speed = Top_Speed*1000/3600  # m/s
 
     # Fly the mission
     def Fly_Mission(self):
@@ -169,6 +172,8 @@ class UAV(Vehicle):
                 raise Exception("UAV can't fly in headwind bigger than top speed")
         self.Trip = trip
 
+    def Go(self):
+        raise Exception("Go Not Implemented for UAV")
 
 """***************************"""
 """     ENVIRONMENT STUFF     """
