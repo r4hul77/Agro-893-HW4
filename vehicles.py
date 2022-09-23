@@ -145,15 +145,15 @@ class UAV(Vehicle):
 
         """Convert to Vehicle units;store with set_Vehicle_attributes"""
         super().__init__()
-        self.max_battery_charge = Battery_Charge * 3600  # J
-        self.max_range = Range*1000  # km
+        self.max_battery_charge = Battery_Charge * 3600/1e6  # J
+        self.max_range = Range*1000  # m
         self.max_speed = Top_Speed*1000/3600  # m/s
 
     # Fly the mission
     def Fly_Mission(self):
 
         # See how it goes
-        EndPoint, MadeIt = self.Go_until_No_Go(self.loc)
+        EndPoint, MadeIt = self.Go_until_No_Go(0)
 
         # Did we crash?
         if MadeIt:
@@ -168,7 +168,7 @@ class UAV(Vehicle):
             raise Exception("UAV can only take FlightPlan")
 
     def Go(self):
-        raise Exception("Go Not Implemented for UAV")
+        self.Fly_Mission()
 
 """***************************"""
 """     ENVIRONMENT STUFF     """
