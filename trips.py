@@ -9,6 +9,7 @@ class Trip(object):
         self.way_points = None
         self.time = None
         self.speed = None
+        self.distances = None
 
     def set_start(self, start):
         self.start = start
@@ -19,9 +20,14 @@ class Trip(object):
 
     def set_way_points(self, way_points):
         self.way_points = way_points
+        self.distances = np.cumsum(way_points)
 
     def run(self):
         pass
+
+    def get_idx(self, loc):
+        idx = np.searchsorted(self.distances, loc)
+        return min(idx, len(self.distances) - 1)
 
 
 class Road_trip(Trip):
@@ -61,8 +67,9 @@ class Road_trip(Trip):
 
         """ Here is placeholder code until you get that done.  It 
             assumes that Loc falls in the first interval         """
-        Speed = self.SpeedLimits[0]  # Use the interval's speed limit
-        Efficiency = E_effic * self.Roughness[0]  # Use self.E_effic * Roughness
+        idx = self.get_idx(Loc)
+        Speed = self.SpeedLimits[idx]  # Use the interval's speed limit
+        Efficiency = E_effic * self.Roughness[idx]  # Use self.E_effic * Roughness
 
         # Done
         return Speed, Efficiency

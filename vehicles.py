@@ -152,7 +152,7 @@ class UAV(Vehicle):
                                     E_avail=self.max_battery_charge,  # Start w / full tank
                                     E_effic=self.Still_Air_Efficiency,  # "Still_Air_Efficiency" in km/MJ
                                     T_Speed=Top_Speed,  # Top speed km/ksec
-                                    SE_args=(self.Still_Air_Efficiency,Top_Speed))
+                                    SE_args=(self.Still_Air_Efficiency, Top_Speed))
 
 
 

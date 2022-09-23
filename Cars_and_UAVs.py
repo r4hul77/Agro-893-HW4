@@ -14,7 +14,7 @@ from vehicles import Car, UAV
 """       SYSTEM STUFF        """
 """***************************"""
 # Make a superclass for vehicles
-
+np.random.seed(0)
 def main():
 
     # Trips
@@ -22,7 +22,7 @@ def main():
     trips = [Road_trip(WayPoints= np.linspace(0, 30, length_trips), SpeedLims=np.random.rand(length_trips)*105,
                        Roughness=np.random.uniform(low=0.3, high=0.8, size=length_trips)),
              Flight_plan(WayPoints= np.linspace(0, 1, length_trips), Headwinds=np.random.rand(length_trips)*18),
-             Road_trip(WayPoints= np.linspace(0, 30, length_trips), SpeedLims=np.random.rand(length_trips)*105,
+             Road_trip(WayPoints= np.linspace(0, 300, length_trips), SpeedLims=np.random.rand(length_trips)*105,
                        Roughness=np.random.uniform(low=0.3, high=0.8, size=length_trips)),
              Flight_plan(WayPoints=np.linspace(0, 200, length_trips), Headwinds=np.random.rand(length_trips) * 18)]
 
