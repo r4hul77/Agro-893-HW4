@@ -18,16 +18,16 @@ from vehicles import Car, UAV
 def main():
 
     # Trips
-    length_trips = 30
+    length_trips = 10
     trips = [Road_trip(WayPoints= np.linspace(0, 30, length_trips), SpeedLims=np.random.rand(length_trips)*105,
                        Roughness=np.random.uniform(low=0.3, high=0.8, size=length_trips)),
-             Flight_plan(WayPoints= np.linspace(0, 30, length_trips), Headwinds=np.random.rand(length_trips)*105),
+             Flight_plan(WayPoints= np.linspace(0, 1, length_trips), Headwinds=np.random.rand(length_trips)*18),
              Road_trip(WayPoints= np.linspace(0, 30, length_trips), SpeedLims=np.random.rand(length_trips)*105,
                        Roughness=np.random.uniform(low=0.3, high=0.8, size=length_trips)),
-             Flight_plan(WayPoints=np.linspace(0, 30, length_trips), Headwinds=np.random.rand(length_trips) * 105)]
+             Flight_plan(WayPoints=np.linspace(0, 200, length_trips), Headwinds=np.random.rand(length_trips) * 18)]
 
              # Make Four Trips
-    vehicle_list = [Car(Top_Speed=105.), UAV(Top_Speed=105., Battery_Charge=100, Range=100)]
+    vehicle_list = [Car(Top_Speed=105.), UAV(Top_Speed=50., Battery_Charge=100, Range=80),Car(Top_Speed=105.), UAV(Top_Speed=20., Battery_Charge=1, Range=100)]
 
     for i, vehicle in enumerate(vehicle_list):
         vehicle.add_trip(trips[i])

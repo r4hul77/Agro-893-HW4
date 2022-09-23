@@ -68,6 +68,7 @@ class Vehicle(object):
             energy = distance / efficiency  # km/(km/MJ)
             self.E_avail -= energy
 
+
         # Return final location and if the travel is finished
         return Loc, Loc >= self.Trip.WayPoints[-1]
 
@@ -145,35 +146,47 @@ class UAV(Vehicle):
 
         """Convert to Vehicle units;store with set_Vehicle_attributes"""
         super().__init__()
-        self.max_battery_charge = Battery_Charge * 3600  # J
-        self.max_range = Range*1000  # km
-        self.max_speed = Top_Speed*1000/3600  # m/s
+        self.max_battery_charge = Battery_Charge * 0.0036 # Watts hour to MJ
+        self.Still_Air_Efficiency = Range / self.max_battery_charge
+        self.set_Vehicle_attributes(E_capac=self.max_battery_charge,  # Full tank in MJ
+                                    E_avail=self.max_battery_charge,  # Start w / full tank
+                                    E_effic=self.Still_Air_Efficiency,  # "Still_Air_Efficiency" in km/MJ
+                                    T_Speed=Top_Speed,  # Top speed km/ksec
+                                    SE_args=(self.Still_Air_Efficiency,Top_Speed))
+
+
 
     # Fly the mission
     def Fly_Mission(self):
 
-        # See how it goes
-        EndPoint, MadeIt = self.Go_until_No_Go(self.loc)
+        # Burn the first tank
+        self.loc, Arrived = self.Go_until_No_Go(self.loc)
+
+        # Keep going if necessary
+        while not Arrived and self.E_avail > 0.:
+            print(self.E_avail)
+            self.loc, Arrived = self.Go_until_No_Go(self.loc)
 
         # Did we crash?
-        if MadeIt:
+        if self.E_avail <= 0.:
+            print("Crashed and burned", self.loc, "km into the mission")
+        elif Arrived:
             print("Mission completed")
-        else:
-            print("Crashed and burned", EndPoint, "km into the mission")
 
     def add_trip(self, trip):
         # check if it is not a Flight_plan instance
-        if not (isinstance(trip, Flight_plan)):
+        if  isinstance(trip, Flight_plan)==False:
             raise Exception("UAV can only take FlightPlan")
 
         # check if one of the trip headwind is bigger than the top speed
         for headwind in trip.Headwinds:
             if headwind > self.T_Speed:
+                print(headwind, self.T_Speed)
                 raise Exception("UAV can't fly in headwind bigger than top speed")
         self.Trip = trip
 
     def Go(self):
-        raise Exception("Go Not Implemented for UAV")
+        self.Fly_Mission()
 
 """***************************"""
 """     ENVIRONMENT STUFF     """

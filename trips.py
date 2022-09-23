@@ -91,10 +91,9 @@ class Flight_plan(Trip):
     # vehicle type.  That's why the superclass uses the SE_args tuple
     # as was used in class to pass different numbers of arguments to
     # the rhs routines for differential equation solving.
-    def Speed_Efficiency(self, Loc, T_speed, Still_Air_Efficiency):
+    def Speed_Efficiency(self, Loc, Still_Air_Efficiency, T_speed):
         # Determine the headwind by linear interpolation
         headwind = np.interp(Loc, self.WayPoints, self.Headwinds)
-
         # Determine the ground speed, which is the actual speed that
         # counts toward completion of the mission.  NOTE that if the
         # the headwind were faster than the top speed of the UAV in
@@ -109,8 +108,8 @@ class Flight_plan(Trip):
         # the actual speed vs. the speed in still air.  That is, a
         # stong headwind will make the energy expenditure per unit
         # distance traveled over the ground quite large.
-        Efficiency = min(0, Still_Air_Efficiency * (Speed / T_speed))
 
+        Efficiency = max(0.0001, Still_Air_Efficiency * (Speed / T_speed))
         # Done
         return Speed, Efficiency
 
