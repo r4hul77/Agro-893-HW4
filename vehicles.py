@@ -40,7 +40,7 @@ class Vehicle(object):
         # that describes the trip characteristics
         self.loc = 0.  # Location from start of trip. V km interval
         self.i = 0  # Index of current segment
-        self.log = [np.array([self.i, self.loc, self.E_avail, 0., 0.])]  # Log of
+        self.log = []  # Log of vehicle
 
     # Replensish the vehicle's store of energy
     def ReEnergize(self):
@@ -75,6 +75,7 @@ class Vehicle(object):
             energy = distance / efficiency  # km/(km/MJ)
             self.E_avail -= energy
             self.i += 1
+            # Log the trip
             self.log.append(np.array([self.i, Loc, self.E_avail, speed, efficiency]))
 
 

@@ -29,8 +29,8 @@ def plot_vehicle(vehicle, filename):
     ax2= ax.twinx()
     ax2.set_ylabel('Energy')
     ax2.plot(log_colums[0], log_colums[2], label='Energy', color='red')
-
-    plt.legend()
+    ax.legend(loc='upper right')
+    ax2.legend(loc='lower right')
     plt.xlabel('Time')
 
     plt.title(vehicle.get_name())
@@ -42,13 +42,13 @@ def main():
     length_trips = 10
     trips = [Road_trip(WayPoints= np.linspace(0, 30, length_trips), SpeedLims=np.random.rand(length_trips)*105,
                        Roughness=np.random.uniform(low=0.3, high=0.8, size=length_trips)),
-             Flight_plan(WayPoints= np.linspace(0, 1, length_trips), Headwinds=np.random.rand(length_trips)*18),
+             Flight_plan(WayPoints= np.linspace(0, 20, length_trips), Headwinds=np.random.rand(length_trips)*18),
              Road_trip(WayPoints= np.linspace(0, 300, length_trips), SpeedLims=np.random.rand(length_trips)*105,
                        Roughness=np.random.uniform(low=0.3, high=0.8, size=length_trips)),
-             Flight_plan(WayPoints=np.linspace(0, 200, length_trips), Headwinds=np.random.rand(length_trips) * 18)]
+             Flight_plan(WayPoints=np.linspace(0, 80, length_trips), Headwinds=np.random.rand(length_trips) * 10)]
 
              # Make Four Trips
-    vehicle_list = [Car(Top_Speed=105.), UAV(Top_Speed=50., Battery_Charge=100, Range=80),Car(Top_Speed=105.), UAV(Top_Speed=20., Battery_Charge=1, Range=100)]
+    vehicle_list = [Car(Top_Speed=105.), UAV(Top_Speed=30., Battery_Charge=100, Range=30),Car(Top_Speed=105.), UAV(Top_Speed=50., Battery_Charge=290, Range=100)]
 
     for i, vehicle in enumerate(vehicle_list):
         vehicle.add_trip(trips[i])
