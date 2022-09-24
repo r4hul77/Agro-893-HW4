@@ -25,9 +25,9 @@ def plot_vehicle(vehicle, filename):
     ax = fig.add_subplot(111)
     ax.plot(log_colums[0], log_colums[1], label='Location', color='blue')
     ax.plot(log_colums[0], log_colums[3], label='Speed', color='green')
-    plt.ylabel('Location/Speed')
+    plt.ylabel('Location (km)/Speed (km/ksec)')
     ax2= ax.twinx()
-    ax2.set_ylabel('Energy')
+    ax2.set_ylabel('Energy (MJ)')
     ax2.plot(log_colums[0], log_colums[2], label='Energy', color='red')
     ax.legend(loc='upper right')
     ax2.legend(loc='lower right')
@@ -52,10 +52,11 @@ def main():
 
     for i, vehicle in enumerate(vehicle_list):
         vehicle.add_trip(trips[i])
+        initial_energy = vehicle.E_avail
         vehicle.Go()
+        # Plot the vehicle log
         plot_vehicle(vehicle, str(i)+".png")
         vehicle.reset()
-
 
 
 # Run the program

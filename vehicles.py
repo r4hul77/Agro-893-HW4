@@ -134,6 +134,7 @@ class Car(Vehicle):
             self.ReEnergize()
             self.Tanks += 1
             self.loc, Arrived = self.Go_until_No_Go(self.loc)
+        print(self.loc)
 
         # Output trip info
         print("Car trip completed with", self.Tanks, "tank needed")
