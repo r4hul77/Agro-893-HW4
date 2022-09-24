@@ -1,4 +1,5 @@
 import numpy as np
+
 from trips import Road_trip, Flight_plan, Trip
 
 
@@ -13,6 +14,9 @@ class Vehicle(object):
 
     def add_trip(self, trip):
         self.Trip = trip
+
+    def get_name(self):
+        pass
 
     # Set up values for common features
     def set_Vehicle_attributes(self,
@@ -35,6 +39,8 @@ class Vehicle(object):
         self.Trip = None  # Either a Road_Trip or Flight_Plan object
         # that describes the trip characteristics
         self.loc = 0.  # Location from start of trip. V km interval
+        self.i = 0  # Index of current segment
+        self.log = [np.array([self.i, self.loc, self.E_avail, 0., 0.])]  # Log of
 
     # Replensish the vehicle's store of energy
     def ReEnergize(self):
@@ -60,6 +66,7 @@ class Vehicle(object):
         # Starting position
         Loc = L0
 
+
         # Run until exhausted
         while self.E_avail > 0. and Loc < self.Trip.WayPoints[-1]:
             speed, efficiency = self.Trip.Speed_Efficiency(Loc, *self.SE_args)
@@ -67,6 +74,8 @@ class Vehicle(object):
             Loc += distance
             energy = distance / efficiency  # km/(km/MJ)
             self.E_avail -= energy
+            self.i += 1
+            self.log.append(np.array([self.i, Loc, self.E_avail, speed, efficiency]))
 
 
         # Return final location and if the travel is finished
@@ -83,6 +92,9 @@ class Vehicle(object):
         return finished
 
 class Car(Vehicle):
+
+    def get_name(self):
+        return f"Car with milage {self.E_effic:.2f} km/MJ"
 
     # Create an instance
     def __init__(self,
@@ -136,6 +148,9 @@ class Car(Vehicle):
 
 # Subclass UAV
 class UAV(Vehicle):
+
+    def get_name(self):
+        return f"UAV with efficiency {self.E_effic:.1f} km/MJ"
 
     # Create an instance
     def __init__(self,

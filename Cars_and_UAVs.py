@@ -8,13 +8,34 @@ Created on Fri Sep 16 05:16:16 2022
 """
 # Import standard stuff
 import numpy as np
+import matplotlib.pyplot as plt
 from trips import Road_trip, Flight_plan
 from vehicles import Car, UAV
+
 """***************************"""
 """       SYSTEM STUFF        """
 """***************************"""
 # Make a superclass for vehicles
 np.random.seed(0)
+
+
+def plot_vehicle(vehicle, filename):
+    log_colums = np.transpose(np.array(vehicle.log))
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(log_colums[0], log_colums[1], label='Location', color='blue')
+    ax.plot(log_colums[0], log_colums[3], label='Speed', color='green')
+    plt.ylabel('Location/Speed')
+    ax2= ax.twinx()
+    ax2.set_ylabel('Energy')
+    ax2.plot(log_colums[0], log_colums[2], label='Energy', color='red')
+
+    plt.legend()
+    plt.xlabel('Time')
+
+    plt.title(vehicle.get_name())
+    plt.savefig(filename)
+
 def main():
 
     # Trips
@@ -32,6 +53,7 @@ def main():
     for i, vehicle in enumerate(vehicle_list):
         vehicle.add_trip(trips[i])
         vehicle.Go()
+        plot_vehicle(vehicle, str(i)+".png")
         vehicle.reset()
 
 
