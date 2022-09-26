@@ -186,7 +186,7 @@ class UAV(Vehicle):
 
         # Did we crash?
         if self.E_avail <= 0.:
-            print("Crashed and burned", self.loc, "km into the mission")
+            print("Crashed and burned", round(self.loc,2), "km into the mission")
         elif Arrived:
             print("Mission completed")
 
