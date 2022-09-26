@@ -31,8 +31,7 @@ def plot_vehicle(vehicle, filename):
     ax2.plot(log_colums[0], log_colums[2], label='Energy', color='red')
     ax.legend(loc='upper right')
     ax2.legend(loc='lower right')
-    plt.xlabel('Time')
-
+    ax.set_xlabel('Time (ksec)')
     plt.title(vehicle.get_name())
     plt.savefig(filename)
 
