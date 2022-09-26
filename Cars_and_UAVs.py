@@ -81,7 +81,7 @@ def main():
         print("The drone flew perfectly.\n")
 
     drone = UAV(Top_Speed=55., Battery_Charge=100, Range=50)
-    flight_plan = Flight_plan(WayPoints=np.linspace(0, 50, length_trips), Headwinds=np.full(length_trips, 45))
+    flight_plan = Flight_plan(WayPoints=np.linspace(0, 50, length_trips), Headwinds=np.full(length_trips, 1))
 
     print("\nTesting the same UAV with wind in the flight plan, and fuel capacity for a no wind day...\n")
     drone.reset()
